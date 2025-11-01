@@ -19,11 +19,5 @@ PASSWORD=[your_password]
 | Test name            | File path                   | Description                  |                                                    
 |----------------------|-----------------------------|-----------------------------------------------------------------------------------|
 | Landing page test    | `tests/landingPage.spec.ts` |Verifies that the page title is as expected: Guru99 Bank.
-| Reset button test    | `tests/resetButton.spec.ts` |Verifies that the input fields for user and password can be filled, and that  pressing the reset button clears the fields.|
-
-
-
-
-
-
-
+| Reset button test    | `tests/login.spec.ts` |Verifies that the input fields for user and password can be filled, and that  pressing the reset button clears the fields.|
+|Login test|`test/login.spec.ts`|Verifies a susseccful login |

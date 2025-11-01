@@ -1,4 +1,8 @@
 import { defineConfig, devices } from '@playwright/test';
+import * as dotenv from 'dotenv';
+
+// Automatically load environment variables
+dotenv.config();
 
 /**
  * Read environment variables from file.
@@ -25,23 +29,37 @@ export default defineConfig({
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
+    headless: false,
     /* Base URL to use in actions like `await page.goto('')`. */
-    // baseURL: 'http://localhost:3000',
-
+    baseURL: process.env.BASE_URL,
+    /*Tacke screenshot on test failure */
+    screenshot: 'only-on-failure',
+    // screenshot: 'on',
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
+
   },
 
   /* Configure projects for major browsers */
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: {
+        viewport: null,
+        launchOptions: {
+          args: ['--start-maximized']
+        }
+      },
     },
 
     {
       name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
+      use: {
+        viewport: null,
+        launchOptions: {
+          args: ['--kiosk'] // Firefox usa --kiosk para pantalla completa
+        }
+      },
     },
 
     // {
