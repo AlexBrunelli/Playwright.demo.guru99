@@ -12,8 +12,6 @@ USER=[your_user]
 PASSWORD=[your_password]
 ```
 
-## List of tests
-
 ## Test file locations
 
 | Test name            | File path                   | Description                  |                                                    

@@ -1,54 +1,43 @@
 import {test,expect}  from '@playwright/test';
 import * as dotenv from 'dotenv';
+import {LoginPage} from '../pages/LoginPage ';
 
 dotenv.config();
 
 test('Reset button test', async ({ page }) => {
-    await page.goto('');
+    const loginPage = new LoginPage(page);
+    await loginPage.navigateTo('');
     
-    const inputUser = page.locator('input[name="uid"]');
-    const inputPass = page.locator('input[name="password"]');
-    const btnReset = page.locator('input[name="btnReset"]');
+    const user = 'usuario';
+    const pass = 'password'
 
     //fill the fields  user and password
-    await inputUser.fill(process.env.USER!);
-    await inputPass.fill(process.env.PASSWORD!);
-
-    //Verify that the inputs have value
-    await expect(inputUser).toHaveValue(process.env.USER!);
-    await expect(inputPass).toHaveValue(process.env.PASSWORD!);
+    await loginPage.fillLogin(user);
+    await loginPage.fillPassword(pass);
+   
+    //Verify that the inputs have the expected value
+    expect(await loginPage.getInputUserText()).toBe(user);
+    expect(await loginPage.getInputPassText()).toBe(pass);
 
     //verify reset button
-    await btnReset.click();
+    await loginPage.clickOnbtnReset();
     // Verify that the fields are empty
-    await expect(inputUser).toHaveValue('');
-    await expect(inputPass).toHaveValue('');
-
-    
+    expect(await loginPage.getInputUserText()).toBe('');
+    expect(await loginPage.getInputPassText()).toBe('');
 });
 
 
 test('Login test', async ({ page }) => {
-  await page.goto('');
+  const loginPage = new LoginPage(page);
+  await loginPage.navigateTo('');
 
-  const inputUser = page.locator('input[name="uid"]');
-  const inputPass = page.locator('input[name="password"]');
-  const btnLogin = page.locator('input[name="btnLogin"]');
-
-  const user = process.env.USER || "";
-  const pass = process.env.PASSWORD || "";
-
-  if (!user || !pass) {
-    throw new Error("Las variables de entorno USER o PASSWORD no están definidas");
-  }
-
-  await inputUser.fill(user);
-  await inputPass.fill(pass);
+  await loginPage.fillLoginEnv();
+  await loginPage.fillPasswordEnv();
 
   // verifies that the inputs have value
-  await expect(inputUser).toHaveValue(user);
-  await expect(inputPass).toHaveValue(pass);
-  await btnLogin.click();
+  expect(await loginPage.getInputUserText()).toBe(process.env.USER);
+  expect(await loginPage.getInputPassText()).toBe(process.env.PASSWORD);
+  await loginPage.clickOnbtnLogin();
 
   await page.waitForURL('**/manager/Managerhomepage.php');
  
