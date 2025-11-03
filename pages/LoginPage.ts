@@ -61,7 +61,6 @@ export class LoginPage extends BasePage {
     }
 
     async getInputPassText(){
-        console.log("Pass:" + this.inputPass.inputValue());
         return await this.inputPass.inputValue();
     }
 }
