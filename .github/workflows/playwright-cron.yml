@@ -10,8 +10,8 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    # Run on develop
-    if: github.ref == 'refs/heads/develop'
+    #    # Run on develop
+    #    if: github.ref == 'refs/heads/develop'
 
     steps:
       - name: Checkout repository
